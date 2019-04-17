@@ -1,8 +1,7 @@
 import { AsyncStorage } from 'react-native'
 
 
-export function getInitialData() {
-    
+export function getInitialData() {    
     return Promise.all([getDecks()])
         .then(([decks,]) => ({
             decks
@@ -12,21 +11,13 @@ export function getInitialData() {
 export function getDecks() {
     return AsyncStorage.getItem('DECKS')
         .then((decks) => {
-            if(!decks) {
-                return {}
-            }
-            return decks
+            
+            return JSON.parse(decks)
         })
 }
 
-/*
-export async function getDecks() {
-    try {
-        const value = await AsyncStorage.getItem('DECKS')
-        if (value !== null) {
-            return value
-        }
-    } catch(err) {
-        console.log(err)
-    }
-}*/
+export function saveDeck(deck) {
+    return AsyncStorage.mergeItem('DECKS', JSON.stringify({
+        [deck.title]: deck
+    }))        
+}

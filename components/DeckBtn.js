@@ -3,14 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 function DeckBtn(props) {
-    const { deckId, handlePress } = props
+    const { deckId, totalCards, handlePress } = props
     
     return (
         <TouchableOpacity onPress={(e) => { handlePress(deckId) }}>
             <View style={{ backgroundColor: '#FBFCFC' }}>
                 <View style={styles.deckContainer}>
-                    <Text style={styles.deckTitle}>Deck Title</Text>
-                    <Text style={styles.deckSubtitle}>0 cards</Text>
+                    <Text style={styles.deckTitle}>{ deckId }</Text>
+                    <Text style={styles.deckSubtitle}>{ totalCards } cards</Text>
                 </View>
             </View>
         </TouchableOpacity>

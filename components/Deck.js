@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { connect } from 'react-redux'
 
 class Deck extends Component {
 
@@ -23,14 +24,15 @@ class Deck extends Component {
         }
     }
     render() {
-        const { navigation } = this.props
-        const deckId = navigation.getParam('deckId', 0)
+        const { navigation, decks } = this.props
+        const deckId = navigation.getParam('deckId', 0)       
+        const totalCards = (decks[deckId].questions).lenght
 
         return (
             <View style={styles.container}>
                 <View style={styles.deckContainer}>
-                    <Text style={styles.deckTitle}>Deck Title</Text>
-                    <Text style={styles.deckSubtitle}>0 cards</Text>
+                    <Text style={styles.deckTitle}>{ deckId }</Text>
+                    <Text style={styles.deckSubtitle}>{ totalCards } cards</Text>
                 </View>
                 <View style={styles.btnsContainer}>
                     <TouchableOpacity onPress={ e => this.handlePress('NEW_QUESTION')} style={styles.secondaryBtn}>
@@ -91,5 +93,10 @@ const styles = StyleSheet.create({
     }
 })
 
+function mapStateToProps({ decks }) {
+    return {
+        decks
+    }
+}
 
-export default Deck
+export default connect(mapStateToProps)(Deck)

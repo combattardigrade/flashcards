@@ -2,12 +2,34 @@ import React, { Component } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { connect } from 'react-redux'
+import { addDeck } from '../actions/decks'
 
 class NewDeck extends Component {
-    handlePress = () => {
-
+    state = {
+        title: ''
     }
-    render() {
+    
+    handleChange = (text) => {
+        this.setState({
+            title: text
+        })        
+    }
+    handlePress = () => {
+        const { title } = this.state
+        const { dispatch, navigation } = this.props
+        // redux
+        dispatch(addDeck({
+            title,
+            questions: []
+        }))
+        // navigation
+        navigation.navigate('Deck', {
+            deckId: title
+        })
+    }
+    render() {        
+        console.log(this.props)
         return (
             <View style={styles.container}>
                 <Ionicons style={{marginBottom:20}} name="ios-add-circle" size={100} color='#99999d' />
@@ -15,6 +37,7 @@ class NewDeck extends Component {
                 <TextInput 
                     placeholder="Enter deck title"
                     style={styles.input}
+                    onChangeText={this.handleChange}
                 />
                 <TouchableOpacity 
                     title="Submit"
@@ -63,4 +86,11 @@ const styles = StyleSheet.create({
         fontSize:14
     },
 })
-export default NewDeck
+
+function mapStateToProps({ decks }) {
+    return {
+        decks
+    }
+}
+
+export default connect(mapStateToProps)(NewDeck)

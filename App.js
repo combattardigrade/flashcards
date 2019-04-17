@@ -14,19 +14,22 @@ import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
 import NewQuestion from './components/NewQuestion'
 import Quiz from './components/Quiz'
+import MyApp from './components/MyApp'
 
-class App extends React.Component {  
-  
+class App extends React.Component {
+
   render() {
 
     const store = createStore(reducer, middleware)
-    
+
     return (
       <Provider store={store}>
-        <View style={{flex:1}}>
-          <MyStatusBar backgroundColor={'black'} barStyle='light-content' />
-          <Navigation/>   
-        </View>
+          <MyApp>
+          <View style={{ flex: 1 }}>
+            <MyStatusBar backgroundColor={'black'} barStyle='light-content' />
+            <Navigation />
+          </View>
+          </MyApp>
       </Provider>
     )
   }
@@ -46,12 +49,12 @@ const Tabs = createBottomTabNavigator({
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
     }
   },
-  AddDeck:  {
+  AddDeck: {
     screen: NewDeck,
     navigationOptions: {
       title: 'Add Deck',
       tabBarLabel: 'Add Deck',
-      tabBarIcon:  ({ tintColor }) => <Ionicons name='ios-add-circle-outline' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-add-circle-outline' size={30} color={tintColor} />
     }
   }
 })
@@ -61,11 +64,11 @@ const Stack = createStackNavigator({
     screen: Tabs,
     navigationOptions: {
       header: null,
-    }    
+    }
   },
   Deck: {
     screen: Deck,
-    navigationOptions: {      
+    navigationOptions: {
       headerTintColor: 'white',
       headerStyle: {
         backgroundColor: 'black'
