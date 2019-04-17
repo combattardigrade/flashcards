@@ -1,5 +1,8 @@
 import React from 'react'
 import { createStore } from 'redux'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import middleware from './middleware';
@@ -8,28 +11,33 @@ import MyStatusBar from './components/MyStatusBar'
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
-
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
 import NewQuestion from './components/NewQuestion'
 import Quiz from './components/Quiz'
-import MyApp from './components/MyApp'
+
 
 class App extends React.Component {
 
   render() {
 
-    const store = createStore(reducer, middleware)
+    const persistConfig = {
+      key: 'root',
+      storage
+    }
+    const persistedReducer = persistReducer(persistConfig, reducer)
+    const store = createStore(persistedReducer, middleware)
+    const persistor = persistStore(store)
 
     return (
       <Provider store={store}>
-          <MyApp>
-          <View style={{ flex: 1 }}>
-            <MyStatusBar backgroundColor={'black'} barStyle='light-content' />
-            <Navigation />
-          </View>
-          </MyApp>
+          <PersistGate loading={null} persistor={persistor} >
+            <View style={{ flex: 1 }}>
+              <MyStatusBar backgroundColor={'black'} barStyle='light-content' />
+              <Navigation />
+            </View>
+          </PersistGate>
       </Provider>
     )
   }
@@ -63,7 +71,12 @@ const Stack = createStackNavigator({
   Home: {
     screen: Tabs,
     navigationOptions: {
-      header: null,
+      /*header: null,*/
+      title: 'Decks',
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'black'
+      }
     }
   },
   Deck: {

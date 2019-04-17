@@ -6,7 +6,9 @@ import { connect } from 'react-redux'
 
 class DeckList extends Component {
 
-     
+    state = {
+        refresh: ''
+    }
 
     static navigationOptions = ({ navigation }) => {
         return {
@@ -22,19 +24,35 @@ class DeckList extends Component {
     }
 
     render() {
-        const { decks } = this.props
+        const { decks, navigation, dispatch } = this.props        
+
+        const willFocusSubscription = navigation.addListener(
+            'willFocus',
+            payload => {
+                
+                console.log(decks)
+            }
+        )
         
-        console.log(this.props)
         return (
             <ScrollView style={{ flex: 1 }}>
-                
+                {
+                    Object.values(decks).map((d) => (
+                        <DeckBtn 
+                            key={d.title} 
+                            deckId={d.title} 
+                            totalCards={d.questions.lenght}
+                            handlePress={this.handlePress} 
+                        />
+                    ))
+                }
                 
             </ScrollView>
         )
     }
 }
 
-function mapStateToProps({ decks }) {    
+function mapStateToProps({ decks }) {        
     return {
         decks
     }

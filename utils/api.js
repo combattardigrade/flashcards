@@ -11,7 +11,9 @@ export function getInitialData() {
 export function getDecks() {
     return AsyncStorage.getItem('DECKS')
         .then((decks) => {
-            
+            if(!decks) {
+                return {}
+            }
             return JSON.parse(decks)
         })
 }

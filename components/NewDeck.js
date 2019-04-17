@@ -29,7 +29,7 @@ class NewDeck extends Component {
         })
     }
     render() {        
-        console.log(this.props)
+        
         return (
             <View style={styles.container}>
                 <Ionicons style={{marginBottom:20}} name="ios-add-circle" size={100} color='#99999d' />
