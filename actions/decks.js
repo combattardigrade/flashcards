@@ -6,3 +6,9 @@ export function addDeck (deck) {
         deck
     }
 }
+
+export function handleInitialData() {
+    return (dispatch) => {
+        dispatch
+    }
+}

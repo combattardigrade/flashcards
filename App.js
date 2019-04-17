@@ -3,16 +3,25 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import middleware from './middleware';
-import { View } from 'react-native'
+import { View, AsyncStorage } from 'react-native'
+import MyStatusBar from './components/MyStatusBar'
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
+
+
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
-import MyStatusBar from './components/MyStatusBar'
+import Deck from './components/Deck'
+
+
 
 export default class App extends React.Component {  
   render() {
+
+    const store = createStore(reducer, middleware)
+    
     return (
-      <Provider store={createStore(reducer, middleware)}>
+      <Provider store={store}>
         <View style={{flex:1}}>
           <MyStatusBar backgroundColor={'black'} barStyle='light-content' />
           <Navigation/>   
@@ -22,27 +31,47 @@ export default class App extends React.Component {
   }
 }
 
-
+// React Navigation and Redux integration
+// https://reactnavigation.org/docs/en/redux-integration.html
 
 const Tabs = createBottomTabNavigator({
-  DeckList: {
-    screen: DeckList
+  Home: {
+    screen: DeckList,
+    navigationOptions: {
+      title: 'Home',
+      tabBarLabel: 'Decks',
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
+    }
   },
-  NewDeck:  {
-    screen: NewDeck
+  AddDeck:  {
+    screen: NewDeck,
+    navigationOptions: {
+      title: 'Add Deck',
+      tabBarLabel: 'Add Deck',
+      tabBarIcon:  ({ tintColor }) => <Ionicons name='ios-add-circle-outline' size={30} color={tintColor} />
+    }
   }
 })
 
 const Stack = createStackNavigator({
-  DeckList: {
-    screen: DeckList
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      header: null,
+    }    
   },
-  NewDeck:  {
-    screen: NewDeck
+  Deck: {
+    screen: Deck,
+    navigationOptions: {      
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'black'
+      }
+    }
   }
 })
 
-const Navigation = createAppContainer(Tabs)
+const Navigation = createAppContainer(Stack)
 
 
 
