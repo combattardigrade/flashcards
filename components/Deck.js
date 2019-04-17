@@ -14,20 +14,26 @@ class Deck extends Component {
 
     handlePress = (page) => {
         const { navigation } = this.props
+        const deckId = navigation.getParam('deckId', 0)
+
         switch(page) {
             case 'NEW_QUESTION':
-                return navigation.navigate('NewQuestion')
+                return (
+                    navigation.navigate('NewQuestion', {deckId})
+                )
             case 'START_QUIZ':
-                return navigation.navigate('Quiz')
+                return (
+                    navigation.navigate('Quiz', {deckId})
+                )
             default:
-                return
+                return 
         }
     }
     render() {
         const { navigation, decks } = this.props
         const deckId = navigation.getParam('deckId', 0)       
-        const totalCards = (decks[deckId].questions).lenght
-
+        const totalCards = decks[deckId].questions.length
+        
         return (
             <View style={styles.container}>
                 <View style={styles.deckContainer}>

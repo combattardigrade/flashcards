@@ -1,6 +1,7 @@
 export const ADD_DECK = 'ADD_DECK'
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
-export const GET_DECKS = 'GET_DECKS'
+export const ADD_CARD = 'ADD_CARD'
+
 import { saveDeck } from '../utils/api'
 
 export function addDeck (deck) {
@@ -18,9 +19,11 @@ export function receiveDecks (decks) {
     }
 }
 
-export function getDecks () {
+export function addCard (card) {
     return {
-        type: GET_DECKS,
+        type: ADD_CARD,
+        card
     }
 }
+
 

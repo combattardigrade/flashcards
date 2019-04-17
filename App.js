@@ -21,7 +21,8 @@ import Quiz from './components/Quiz'
 class App extends React.Component {
 
   render() {
-
+    
+        
     const persistConfig = {
       key: 'root',
       storage
@@ -29,7 +30,7 @@ class App extends React.Component {
     const persistedReducer = persistReducer(persistConfig, reducer)
     const store = createStore(persistedReducer, middleware)
     const persistor = persistStore(store)
-
+    //persistor.purge()
     return (
       <Provider store={store}>
           <PersistGate loading={null} persistor={persistor} >
@@ -91,6 +92,7 @@ const Stack = createStackNavigator({
   NewQuestion: {
     screen: NewQuestion,
     navigationOptions: {
+      /*title: 'Add Card',*/
       headerTintColor: 'white',
       headerStyle: {
         backgroundColor: 'black'

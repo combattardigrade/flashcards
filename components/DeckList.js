@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { ScrollView, Text } from 'react-native'
+import { ScrollView, Text, AsyncStorage } from 'react-native'
 import DeckBtn from './DeckBtn'
 import { handleInitialData } from '../actions/shared'
 import { connect } from 'react-redux'
 
 class DeckList extends Component {
+
+   
 
     state = {
         refresh: ''
@@ -24,15 +26,7 @@ class DeckList extends Component {
     }
 
     render() {
-        const { decks, navigation, dispatch } = this.props        
-
-        const willFocusSubscription = navigation.addListener(
-            'willFocus',
-            payload => {
-                
-                console.log(decks)
-            }
-        )
+        const { decks } = this.props 
         
         return (
             <ScrollView style={{ flex: 1 }}>
@@ -41,7 +35,7 @@ class DeckList extends Component {
                         <DeckBtn 
                             key={d.title} 
                             deckId={d.title} 
-                            totalCards={d.questions.lenght}
+                            totalCards={d.questions.length}
                             handlePress={this.handlePress} 
                         />
                     ))
