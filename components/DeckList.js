@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native'
 import DeckBtn from './DeckBtn'
-
+import { handleInitialData } from '../actions/shared';
+import { connect } from 'react-redux';
 
 class DeckList extends Component {
+
+    componentDidMount() {
+        this.props.dispatch(handleInitialData())
+    }
 
     static navigationOptions = ({ navigation }) => {
         return {
@@ -11,9 +16,9 @@ class DeckList extends Component {
         }
     }
 
-       
+
     handlePress = (deckId) => {
-        this.props.navigation.navigate('Deck',{            
+        this.props.navigation.navigate('Deck', {
             deckId: deckId
         })
     }
@@ -30,6 +35,4 @@ class DeckList extends Component {
     }
 }
 
-
-
-export default DeckList
+export default connect()(DeckList)

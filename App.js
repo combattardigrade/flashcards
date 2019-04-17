@@ -12,10 +12,11 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
+import NewQuestion from './components/NewQuestion'
+import Quiz from './components/Quiz'
 
-
-
-export default class App extends React.Component {  
+class App extends React.Component {  
+  
   render() {
 
     const store = createStore(reducer, middleware)
@@ -30,6 +31,8 @@ export default class App extends React.Component {
     )
   }
 }
+
+export default App
 
 // React Navigation and Redux integration
 // https://reactnavigation.org/docs/en/redux-integration.html
@@ -63,6 +66,24 @@ const Stack = createStackNavigator({
   Deck: {
     screen: Deck,
     navigationOptions: {      
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'black'
+      }
+    }
+  },
+  NewQuestion: {
+    screen: NewQuestion,
+    navigationOptions: {
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'black'
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
       headerTintColor: 'white',
       headerStyle: {
         backgroundColor: 'black'
