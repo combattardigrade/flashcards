@@ -11,7 +11,7 @@ Installs the modules and dependencies required to start the application.
 
 ## `yarn start`
 Runs the app in development mode inside an Android emulator.<br>
-Make sure you run an Android emulator before running the app.
+Make sure to run an Android emulator before running the app.
 
 *The app has only been tested for Android.
 
