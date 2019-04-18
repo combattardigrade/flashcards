@@ -56,11 +56,7 @@ class Quiz extends Component {
         const { decks, navigation } = this.props
         const { counter, correct, showAnswer } = this.state
         const deckId = navigation.getParam('deckId', 0)
-        const totalQuestions = decks[deckId].questions.length       
-
-        if(counter <= (totalQuestions - 1) ) {
-            const answer = decks[deckId].questions[counter].answer
-        }
+        const totalQuestions = decks[deckId].questions.length  
 
         return (
             <View style={styles.pageContainer}>
@@ -78,7 +74,7 @@ class Quiz extends Component {
                                             <Text>Show Answer</Text>
                                         </TouchableOpacity>
                                     :
-                                        <Text>{ answer }</Text>
+                                        <Text>{ decks[deckId].questions[counter].answer }</Text>
                                 }                                
                             </View>
                             <View style={styles.btnsContainer}>                                
@@ -128,7 +124,7 @@ const styles = StyleSheet.create({
     },
     questionTitle: {
         fontWeight: 'bold',
-        fontSize: 22,
+        fontSize: 28,
         textAlign: 'center'
     },
     primaryBtn: {

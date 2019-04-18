@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { connect } from 'react-redux'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 class Deck extends Component {
 
@@ -37,6 +38,7 @@ class Deck extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.deckContainer}>
+                    <MaterialCommunityIcons name="cards" size={100} color="#007aff" />
                     <Text style={styles.deckTitle}>{ deckId }</Text>
                     <Text style={styles.deckSubtitle}>{ totalCards } cards</Text>
                 </View>
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',        
     },
     primaryBtn: {
-        backgroundColor: 'black',
+        backgroundColor: '#007aff',
         width: wp('80%'),        
         height: 50,
         justifyContent: 'center',
@@ -87,15 +89,15 @@ const styles = StyleSheet.create({
     },
     deckContainer: {        
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center',        
     },
     deckTitle: {
-        fontSize: 18,
+        fontSize: 28,
         fontWeight: 'bold'
     },
     deckSubtitle: {
-        fontSize: 14,
+        fontSize: 22,
     }
 })
 

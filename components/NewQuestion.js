@@ -3,6 +3,7 @@ import { KeyboardAvoidingView, Text, StyleSheet, TextInput, TouchableOpacity } f
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { connect } from 'react-redux'
 import { addCard } from '../actions/decks'
+import { Ionicons } from '@expo/vector-icons'
 
 class NewQuestion extends Component{
     state = {
@@ -12,7 +13,7 @@ class NewQuestion extends Component{
     static navigationOptions = ({ navigation }) => {
         const deckId = navigation.getParam('deckId', 0)
         return {
-            title: deckId
+            title: 'Add card to ' + deckId
         }
     }
     handlePress = () => {
@@ -25,11 +26,7 @@ class NewQuestion extends Component{
             question,
             answer,
         }))
-        // navigation
-        // return to deck
-        /*navigation.navigate('Deck', {
-            deckId: deckId
-        })*/
+        
         navigation.pop()
 
         // clear state
@@ -52,6 +49,7 @@ class NewQuestion extends Component{
         
         return ( 
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+                <Ionicons style={{marginBottom:20}} name="ios-add-circle" size={100} color='#007aff' />
                 <Text style={styles.title}>Add Card</Text>
                 <TextInput 
                     placeholder="Question"
