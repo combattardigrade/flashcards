@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, AsyncStorage } from 'react-native'
 import DeckBtn from './DeckBtn'
-import { handleInitialData } from '../actions/shared'
 import { connect } from 'react-redux'
+import { setLocalNotification } from '../utils/helpers'
 
 class DeckList extends Component {
 
-   
+    componentDidMount () {
+        // set notification for today
+        setLocalNotification()
+    }
 
     state = {
         refresh: ''

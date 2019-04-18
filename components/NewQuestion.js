@@ -20,6 +20,11 @@ class NewQuestion extends Component{
         const { dispatch, navigation } = this.props
         const { question, answer } = this.state
         const deckId = navigation.getParam('deckId', 0)
+
+        if(!question || !answer) {
+            return false
+        }
+
         // redux 
         dispatch(addCard({
             deckId,

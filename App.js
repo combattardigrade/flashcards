@@ -18,12 +18,9 @@ import NewQuestion from './components/NewQuestion'
 import Quiz from './components/Quiz'
 
 
-class App extends React.Component {
-
+class App extends React.Component {  
   render() {
-    
-        
-    const persistConfig = {
+     const persistConfig = {
       key: 'root',
       storage
     }

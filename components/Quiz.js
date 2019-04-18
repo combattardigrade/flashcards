@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { connect } from 'react-redux';
+import { clearLocalNotifications, setLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
 
@@ -38,7 +39,7 @@ class Quiz extends Component {
         })
     }
 
-    handleRestart = () => {        
+    handleRestart = () => {
         this.setState({
             counter: 0,
             correct: 0,
@@ -52,11 +53,18 @@ class Quiz extends Component {
         navigation.pop()
     }
 
+    handleComplete = () => {
+        // clear notificaiton for today
+        // and set notification for tomorrow
+        clearLocalNotifications()
+            .then(setLocalNotification('tomorrow'))
+    }
+
     render() {
         const { decks, navigation } = this.props
         const { counter, correct, showAnswer } = this.state
         const deckId = navigation.getParam('deckId', 0)
-        const totalQuestions = decks[deckId].questions.length  
+        const totalQuestions = decks[deckId].questions.length
 
         return (
             <View style={styles.pageContainer}>
@@ -69,15 +77,15 @@ class Quiz extends Component {
                                 <Text style={styles.questionTitle}>{decks[deckId].questions[counter].question}</Text>
                                 {
                                     showAnswer === false
-                                    ?   
+                                        ?
                                         <TouchableOpacity style={styles.secondaryBtn} onPress={this.handleShowAnswer}>
                                             <Text>Show Answer</Text>
                                         </TouchableOpacity>
-                                    :
-                                        <Text>{ decks[deckId].questions[counter].answer }</Text>
-                                }                                
+                                        :
+                                        <Text>{decks[deckId].questions[counter].answer}</Text>
+                                }
                             </View>
-                            <View style={styles.btnsContainer}>                                
+                            <View style={styles.btnsContainer}>
                                 <TouchableOpacity style={styles.primaryBtn} onPress={e => this.handlePress('correct')}>
                                     <Text style={styles.btnText}>Correct</Text>
                                 </TouchableOpacity>
@@ -87,15 +95,15 @@ class Quiz extends Component {
                             </View>
                         </View>
                         :
-                        <View style={styles.completedContainer}>
-                            <Text style={[styles.questionTitle,{marginBottom:20}]}>Quiz completed!</Text>
+                        <View onLayout={this.handleComplete} style={styles.completedContainer}>
+                            <Text  style={[styles.questionTitle, { marginBottom: 20 }]}>Quiz completed!</Text>
                             <Text style={{}}>Correct answers: </Text>
-                            <Text style={{marginBottom: 20,fontSize:18}}>{(correct / totalQuestions * 100).toFixed(2)}%</Text>
+                            <Text style={{ marginBottom: 20, fontSize: 18 }}>{(correct / totalQuestions * 100).toFixed(2)}%</Text>
                             <TouchableOpacity style={styles.primaryBtn} onPress={this.handleRestart} >
                                 <Text style={styles.btnText}>Restart Quiz</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.secondaryBtnLg} onPress={this.handleBack}>
-                                <Text style={{color: 'black'}}>Back to Deck</Text>
+                                <Text style={{ color: 'black' }}>Back to Deck</Text>
                             </TouchableOpacity>
                         </View>
                 }
@@ -144,7 +152,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10
     },
-    secondaryBtn:{
+    secondaryBtn: {
         backgroundColor: 'white',
         width: wp('30%'),
         height: 50,
@@ -155,7 +163,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.1,
         marginTop: 10
     },
-    secondaryBtnLg:{
+    secondaryBtnLg: {
         backgroundColor: 'white',
         width: wp('80%'),
         height: 50,

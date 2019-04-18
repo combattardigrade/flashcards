@@ -18,6 +18,11 @@ class NewDeck extends Component {
     handlePress = () => {
         const { title } = this.state
         const { dispatch, navigation } = this.props
+
+        if(!title) {
+            return false
+        }
+
         // redux
         dispatch(addDeck({
             title,
