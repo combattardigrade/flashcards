@@ -8,7 +8,7 @@ class Deck extends Component {
     static navigationOptions = ({ navigation }) => {
         const deckId = navigation.getParam('deckId', 0)
         return {
-            title: deckId
+            title: 'Deck: ' + deckId
         }
     }
 
